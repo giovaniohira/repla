@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Repla promo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=block" rel="stylesheet">
+<style>
+/* Every .a element is a CSS animation paused and scrubbed by seek(t), so each frame is deterministic.
+   --s (inherited) = scene start in seconds; --at = delay inside the scene. The rest are per-element and don't inherit. */
+@property --an { syntax: '*'; inherits: false; }
+@property --at { syntax: '*'; inherits: false; }
+@property --d { syntax: '*'; inherits: false; }
+@property --n { syntax: '*'; inherits: false; }
+@property --dir { syntax: '*'; inherits: false; }
+@property --ease { syntax: '*'; inherits: false; }
+
+:root { --teal: #0F9D8A; --teal2: #22B8A3; --mint: #15C896; --ink: #1E293B; --bg: #F4F6F9; --blue: #4A7BF7; --amber: #F59E0B; --pink: #EC4899; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0E1420; font-family: Poppins, 'Segoe UI', sans-serif; }
+#stage { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.scene { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+.a {
+  animation-name: var(--an, pop);
+  animation-duration: calc(var(--d, .5) * 1s);
+  animation-timing-function: var(--ease, cubic-bezier(.2, 1.4, .4, 1));
+  animation-delay: calc(var(--s) * 1s + var(--at, 0) * 1s);
+  animation-iteration-count: var(--n, 1);
+  animation-direction: var(--dir, normal);
+  animation-fill-mode: both;
+}
+@keyframes pop { 0% { transform: scale(0); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+@keyframes slam { 0% { transform: scale(3.2) rotate(-6deg); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+@keyframes stamp { 0% { transform: scale(4) rotate(-30deg); opacity: 0 } 100% { transform: scale(1) rotate(-9deg); opacity: 1 } }
+@keyframes up { 0% { transform: translateY(90px); opacity: 0 } 100% { transform: none; opacity: 1 } }
+@keyframes rise { 0% { transform: translateY(700px) } 100% { transform: none } }
+@keyframes drop { 0% { transform: translateY(-1400px) } 100% { transform: none } }
+@keyframes phoneIn { 0% { transform: translateY(1500px) rotate(8deg) } 100% { transform: none } }
+@keyframes sheet { 0% { transform: translateY(110%) } 100% { transform: none } }
+@keyframes bob { 0% { transform: translateY(0) } 100% { transform: translateY(-34px) } }
+@keyframes lift { 0% { transform: translateY(40px) scaleY(.94) } 100% { transform: translateY(-40px) } }
+@keyframes pulse { 0% { transform: scale(1) } 100% { transform: scale(1.07) } }
+@keyframes spin { to { transform: rotate(360deg) } }
+@keyframes wobble { 0% { transform: rotate(-5deg) } 100% { transform: rotate(5deg) } }
+@keyframes show { 0% { opacity: 0 } 100% { opacity: 1 } }
+@keyframes hide { 0% { opacity: 1 } 100% { opacity: 0 } }
+@keyframes strike { 0% { width: 0 } 100% { width: 108% } }
+@keyframes grow { 0% { width: 0 } }
+@keyframes ring { 0% { stroke-dashoffset: 1005 } 100% { stroke-dashoffset: 165 } }
+@keyframes draw { 0% { stroke-dashoffset: 1400 } 100% { stroke-dashoffset: 0 } }
+@keyframes laser { 0% { top: 16% } 100% { top: 80% } }
+@keyframes flash { 0% { opacity: 0 } 1% { opacity: .95 } 100% { opacity: 0 } }
+@keyframes fly { 0% { transform: translate(var(--fx), var(--fy)) rotate(-200deg) scale(1.4); opacity: 1 } 85% { opacity: 1 } 100% { transform: none; opacity: 0 } }
+@keyframes fall { 0% { transform: translate(0, -200px) rotate(0) } 100% { transform: translate(var(--dx), 2100px) rotate(var(--rot)) } }
+@keyframes tap { 0% { transform: translate(500px, 900px) } 55% { transform: none } 70% { transform: scale(.85) } 100% { transform: none } }
+@keyframes press { 0%, 100% { transform: none } 50% { transform: scale(.92) } }
+@keyframes floatUp { 0% { transform: translateY(0); opacity: 0 } 20% { opacity: 1 } 100% { transform: translateY(-260px); opacity: 0 } }
+@keyframes cell { 0% { background: #243044; transform: scale(.6) } 60% { transform: scale(1.2) } 100% { background: var(--teal2); transform: scale(1) } }
+@keyframes glowPulse { 0% { filter: drop-shadow(0 0 0 #F59E0B) } 100% { filter: drop-shadow(0 0 60px #F59E0B) } }
+
+.center { position: absolute; left: 0; right: 0; text-align: center; }
+h1 { font-weight: 900; font-size: 104px; line-height: 1.02; letter-spacing: -3px; color: #fff; }
+h1 em { font-style: normal; color: var(--mint); }
+.guaxi { width: 100%; display: block; }
+
+/* S1 hook */
+.s1 { background: radial-gradient(circle at 50% 40%, #2A364D, #111827 75%); }
+.hook { position: absolute; top: 360px; left: 0; right: 0; text-align: center; color: #fff; font-weight: 900; }
+.hook .l1 { font-size: 120px; letter-spacing: -4px; }
+.hook .l2wrap { position: relative; display: inline-block; margin-top: 10px; }
+.hook .l2 { font-size: 150px; letter-spacing: -5px; color: #94A3B8; }
+.hook .strike { position: absolute; left: -4%; top: 52%; height: 26px; background: #F05252; border-radius: 13px; transform: rotate(-4deg); }
+.hook .era { font-size: 230px; color: var(--mint); letter-spacing: -8px; margin-top: -30px; text-shadow: 0 12px 0 #0A7D6E; }
+.hook .meh { font-size: 46px; font-weight: 600; color: #64748B; margin-top: 18px; }
+.s1 .gw { position: absolute; width: 640px; left: 220px; bottom: -40px; }
+.s1 .gw img { position: absolute; left: 0; bottom: 0; }
+
+/* S2 intro */
+.s2 { background: radial-gradient(circle at 50% 45%, #22D3A6, #0F9D8A 55%, #0A6B5E); }
+.rays { position: absolute; left: 50%; top: 42%; width: 3000px; height: 3000px; margin: -1500px 0 0 -1500px; border-radius: 50%;
+  background: repeating-conic-gradient(rgba(255,255,255,.13) 0 10deg, transparent 10deg 20deg); }
+.bubble { position: absolute; top: 170px; left: 110px; right: 110px; background: #fff; color: var(--ink); border-radius: 60px; padding: 44px 50px;
+  font-size: 62px; font-weight: 700; line-height: 1.15; text-align: center; box-shadow: 0 20px 0 rgba(0,0,0,.15); transform-origin: 50% 120%; }
+.bubble:after { content: ''; position: absolute; bottom: -46px; left: 50%; margin-left: -40px; border: 40px solid transparent; border-top: 50px solid #fff; border-bottom: 0; }
+.bubble b { color: var(--teal); }
+.s2 .gw { position: absolute; width: 720px; left: 180px; top: 560px; }
+.s2 .title { top: 1270px; font-size: 190px; font-weight: 900; color: #fff; line-height: .9; letter-spacing: -7px; text-shadow: 0 14px 0 #0A6B5E; }
+.s2 .sub { top: 1640px; font-size: 56px; font-weight: 700; color: #E6FFF8; }
+
+/* phone */
+.phone { position: absolute; left: 160px; width: 760px; height: 1420px; border-radius: 96px; background: #0B0F17; padding: 22px;
+  box-shadow: 0 50px 120px rgba(0,0,0,.55), inset 0 0 0 4px #2A3548; }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 76px; overflow: hidden; background: var(--bg); color: var(--ink); }
+.notch { position: absolute; top: 22px; left: 50%; width: 170px; height: 46px; margin-left: -85px; background: #0B0F17; border-radius: 30px; z-index: 5; }
+.sbar { display: flex; justify-content: space-between; padding: 30px 60px 0; font-size: 30px; font-weight: 700; }
+.card { background: #fff; border-radius: 40px; box-shadow: 0 4px 10px rgba(15,23,42,.08); }
+
+/* S3 today */
+.s3, .s4, .s5, .s6 { background: radial-gradient(circle at 50% 0%, #1B2A40, #0E1420 70%); }
+.s3 h1, .s4 h1, .s5 h1, .s6 h1 { top: 110px; }
+.s3 .phone { top: 440px; }
+.today { padding: 26px 40px; }
+.today .hi { font-size: 58px; font-weight: 800; letter-spacing: -1.5px; }
+.today .date { font-size: 28px; color: #64748B; font-weight: 600; margin-top: -4px; }
+.ringcard { margin-top: 26px; padding: 36px; display: flex; flex-direction: column; align-items: center; }
+.ringbox { position: relative; width: 380px; height: 380px; }
+.ringbox svg { transform: rotate(-90deg); }
+.ringtxt { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ringtxt b { font-size: 92px; font-weight: 900; letter-spacing: -3px; line-height: 1; }
+.ringtxt span { font-size: 28px; color: #64748B; font-weight: 600; }
+.macros { width: 100%; display: flex; gap: 22px; margin-top: 30px; }
+.macro { flex: 1; font-size: 24px; font-weight: 700; color: #64748B; }
+.macro .v { font-size: 30px; color: var(--ink); font-weight: 800; }
+.bar { height: 18px; border-radius: 9px; background: #E6EBF2; margin: 10px 0 0; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 9px; }
+.meal { display: flex; align-items: center; gap: 22px; padding: 22px 28px; margin-top: 18px; font-size: 32px; font-weight: 700; }
+.meal .em { font-size: 50px; }
+.meal .k { margin-left: auto; color: var(--teal); font-weight: 800; }
+.emo { position: absolute; font-size: 110px; left: 470px; top: 820px; }
+.toast { position: absolute; left: 90px; right: 90px; top: 1690px; background: var(--amber); color: #3A2E10; border-radius: 40px; padding: 30px; font-size: 48px; font-weight: 800; text-align: center; box-shadow: 0 16px 0 #B45309; }
+
+/* S4 scan */
+.s4 .phone { top: 460px; }
+.cam { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, #4B5563, #111 80%); }
+.pot { position: absolute; left: 190px; top: 250px; width: 336px; height: 400px; }
+.pot .lid { height: 50px; background: #CBD5E1; border-radius: 20px 20px 8px 8px; }
+.pot .body { height: 350px; background: linear-gradient(90deg, #E2E8F0, #fff 40%, #E2E8F0); clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
+.pot .brand { background: var(--blue); color: #fff; font-weight: 900; font-size: 50px; padding: 6px 28px; border-radius: 12px; transform: rotate(-4deg); }
+.pot .brand2 { font-weight: 800; color: var(--blue); font-size: 34px; margin-top: 14px; }
+.barcode { position: absolute; left: 210px; top: 720px; width: 296px; height: 170px; background: #fff; padding: 18px 22px 40px; border-radius: 8px; }
+.barcode i { display: block; width: 100%; height: 100%; }
+.barcode span { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: 600 22px monospace; letter-spacing: 4px; color: #111; }
+.frame { position: absolute; left: 130px; top: 640px; width: 456px; height: 330px; }
+.frame b { position: absolute; width: 80px; height: 80px; border: 12px solid #fff; }
+.frame b:nth-child(1) { left: 0; top: 0; border-right: 0; border-bottom: 0; border-radius: 30px 0 0 0; }
+.frame b:nth-child(2) { right: 0; top: 0; border-left: 0; border-bottom: 0; border-radius: 0 30px 0 0; }
+.frame b:nth-child(3) { left: 0; bottom: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 30px; }
+.frame b:nth-child(4) { right: 0; bottom: 0; border-left: 0; border-top: 0; border-radius: 0 0 30px 0; }
+.frame.ok b { border-color: var(--mint); }
+.laser { position: absolute; left: 6%; right: 6%; height: 8px; background: #F05252; box-shadow: 0 0 30px 10px rgba(240,82,82,.6); border-radius: 4px; }
+.flashw { position: absolute; inset: 0; background: #fff; }
+.camhint { position: absolute; top: 120px; left: 0; right: 0; text-align: center; color: #fff; font-size: 34px; font-weight: 700; }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 60px 60px 0 0; padding: 40px 50px 70px; }
+.sheet .grab { width: 110px; height: 12px; border-radius: 6px; background: #DDE3EB; margin: 0 auto 30px; }
+.sheet .name { font-size: 50px; font-weight: 800; letter-spacing: -1px; }
+.sheet .src { font-size: 26px; color: #64748B; font-weight: 600; }
+.chips { display: flex; gap: 16px; margin: 28px 0; }
+.chips div { flex: 1; background: var(--bg); border-radius: 26px; padding: 18px 0; text-align: center; font-size: 26px; color: #64748B; font-weight: 700; }
+.chips b { display: block; font-size: 42px; color: var(--ink); }
+.addbtn { background: var(--teal); color: #fff; font-weight: 800; font-size: 42px; text-align: center; padding: 32px; border-radius: 36px; }
+.finger { position: absolute; font-size: 150px; left: 560px; top: 1610px; z-index: 9; }
+.plus { position: absolute; z-index: 10; left: 0; right: 0; top: 1180px; text-align: center; font-size: 110px; font-weight: 900; color: var(--mint); text-shadow: 0 8px 0 #0A7D6E, 0 0 40px #000; }
+.s4 .foot { top: 345px; font-size: 38px; font-weight: 600; color: #9AA7BA; }
+
+/* S5 workout */
+.s5 .gw { position: absolute; width: 560px; left: 260px; top: 400px; }
+.sets { position: absolute; left: 110px; right: 110px; top: 1040px; padding: 40px 44px; }
+.sets .ex { font-size: 48px; font-weight: 800; letter-spacing: -1px; display: flex; justify-content: space-between; align-items: center; }
+.sets .ex small { font-size: 28px; color: #64748B; font-weight: 700; }
+.set { position: relative; display: flex; align-items: center; gap: 30px; font-size: 40px; font-weight: 700; padding: 22px 26px; margin-top: 16px; border-radius: 28px; background: var(--bg); overflow: hidden; }
+.set .bg { position: absolute; inset: 0; background: #DDF3EF; }
+.set > span { position: relative; }
+.set .n { width: 60px; height: 60px; border-radius: 30px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #64748B; }
+.set .ck { margin-left: auto; width: 64px; height: 64px; border-radius: 32px; background: var(--teal); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+.pr { position: absolute; top: 560px; left: 0; right: 0; text-align: center; }
+.pr div { display: inline-block; background: var(--amber); color: #fff; font-size: 130px; font-weight: 900; padding: 10px 60px; border-radius: 40px; letter-spacing: -3px; box-shadow: 0 16px 0 #B45309; border: 8px solid #fff; }
+.vs { top: 1720px; font-size: 48px; font-weight: 800; color: var(--mint); }
+.confetti i { position: absolute; top: 0; width: 26px; height: 40px; border-radius: 6px; }
+
+/* S6 streak */
+.s6 .note { top: 350px; font-size: 44px; font-weight: 600; color: #9AA7BA; }
+.streak { position: absolute; left: 90px; right: 90px; top: 480px; background: #182030; border-radius: 50px; padding: 44px 50px; color: #fff; }
+.streak .top { display: flex; align-items: center; gap: 30px; }
+.streak .fire { font-size: 150px; line-height: 1; }
+.streak .num { font-size: 170px; font-weight: 900; letter-spacing: -6px; line-height: 1; }
+.streak .lbl { font-size: 40px; font-weight: 700; color: #9AA7BA; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 18px; margin-top: 36px; }
+.cal i { aspect-ratio: 1; border-radius: 24px; background: #243044; }
+.chart { position: absolute; left: 90px; right: 90px; top: 1260px; background: #182030; border-radius: 50px; padding: 40px 50px; color: #fff; }
+.chart .t { font-size: 40px; font-weight: 800; display: flex; justify-content: space-between; }
+.chart .t b { color: var(--mint); }
+.chart svg { display: block; margin-top: 16px; }
+.s6 .gw { position: absolute; width: 420px; right: -60px; bottom: -80px; }
+
+/* S7 CTA */
+.s7 { background: radial-gradient(circle at 50% 38%, #22D3A6, #0F9D8A 50%, #075A4F); }
+.s7 .rays { top: 30%; }
+.logo { position: absolute; width: 560px; left: 260px; top: 150px; filter: drop-shadow(0 24px 30px rgba(0,0,0,.3)); }
+.s7 .name { top: 730px; font-size: 150px; font-weight: 900; color: #fff; letter-spacing: -7px; line-height: .95; text-shadow: 0 14px 0 #075A4F; }
+.s7 .tag { top: 920px; font-size: 56px; font-weight: 700; color: #E6FFF8; line-height: 1.2; }
+.sticker { position: absolute; z-index: 3; right: 60px; top: 470px; width: 250px; height: 250px; border-radius: 50%; background: var(--amber); color: #fff; font-weight: 900;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 40px; line-height: 1; border: 8px solid #fff; box-shadow: 0 12px 0 #B45309; }
+.sticker b { font-size: 70px; letter-spacing: -2px; }
+.cta { position: absolute; left: 150px; right: 150px; top: 1180px; }
+.cta .btn { background: #fff; color: var(--teal); font-size: 84px; font-weight: 900; text-align: center; padding: 44px 0; border-radius: 80px; letter-spacing: -2px; box-shadow: 0 18px 0 #075A4F; }
+.cta .play { margin-top: 44px; text-align: center; font-size: 42px; font-weight: 700; color: #fff; }
+.cta .play span { display: inline-block; background: #0B0F17; padding: 20px 44px; border-radius: 24px; }
+.s7 .gw { position: absolute; width: 440px; left: -40px; bottom: -40px; }
+.s7 .bye { top: 1700px; left: 360px; right: 40px; text-align: left; font-size: 50px; font-weight: 800; color: #fff; line-height: 1.15; }
+.s7 .finger { left: 700px; top: 1250px; }
+
+#wipe { position: absolute; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
+#wipe img { width: 380px; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- S1: hook -->
+<section class="scene s1" data-s="0" data-e="3" style="--s:0">
+  <div class="hook">
+    <div class="a l1" style="--an:slam;--at:.15;--d:.35">Contar calorias</div>
+    <div class="l2wrap">
+      <div class="a l2" style="--an:slam;--at:.55;--d:.35">é chato.</div>
+      <div class="a strike" style="--an:strike;--at:1.75;--d:.18;--ease:ease-out"></div>
+    </div>
+    <div class="a meh" style="--an:up;--at:.95;--d:.4">balança, planilha, tabela... 😴</div>
+    <div class="a era" style="--an:stamp;--at:2.0;--d:.35">ERA.</div>
+  </div>
+  <div class="a gw" style="--an:rise;--at:.2;--d:.7">
+    <img class="guaxi a" src="../mobile/assets/mascot/sad.png" style="--an:hide;--at:2;--d:.01">
+    <img class="guaxi a" src="../mobile/assets/mascot/cheer.png" style="--an:show;--at:2;--d:.01">
+  </div>
+</section>
+
+<!-- S2: meet Guaxi -->
+<section class="scene s2" data-s="3" data-e="7" style="--s:3">
+  <div class="rays a" style="--an:spin;--d:14;--ease:linear;--n:infinite"></div>
+  <div class="a gw" style="--an:drop;--at:.05;--d:.75">
+    <img class="guaxi a" src="../mobile/assets/mascot/cheer.png" style="--an:bob;--at:.8;--d:.25;--n:infinite;--dir:alternate;--ease:ease-in-out">
+  </div>
+  <div class="a bubble" style="--an:pop;--at:.7">Oi! Eu sou o <b>Guaxi</b> 🦝<br>seu personal de bolso</div>
+  <div class="a center title" style="--an:slam;--at:2;--d:.4">Calorie<br>Gym</div>
+  <div class="a center sub" style="--an:up;--at:2.5">dieta + treino, sem drama</div>
+</section>
+
+<!-- S3: today -->
+<section class="scene s3" data-s="7" data-e="12" style="--s:7">
+  <h1 class="a center" style="--an:up;--at:.05">Calorias e proteína<br><em>no automático</em></h1>
+  <div class="a phone" style="--an:phoneIn;--at:.1;--d:.7;--ease:cubic-bezier(.2,1.1,.3,1)">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span>●●● 🔋</span></div>
+      <div class="today">
+        <div class="hi">Hoje</div>
+        <div class="date">quinta, 25 de setembro</div>
+        <div class="card ringcard">
+          <div class="ringbox">
+            <svg width="380" height="380" viewBox="0 0 380 380">
+              <circle cx="190" cy="190" r="160" fill="none" stroke="#E6EBF2" stroke-width="36"/>
+              <circle class="a" cx="190" cy="190" r="160" fill="none" stroke="#0F9D8A" stroke-width="36" stroke-linecap="round"
+                stroke-dasharray="1005" style="--an:ring;--at:.6;--d:1.6;--ease:cubic-bezier(.3,.8,.3,1)"/>
+            </svg>
+            <div class="ringtxt"><b data-n="1840" data-at="7.6" data-dur="1.6">0</b><span>de 2.200 kcal</span></div>
+          </div>
+          <div class="macros">
+            <div class="macro">Proteína<div class="v"><span data-n="148" data-at="8" data-dur="1.2">0</span>/150g</div><div class="bar"><i class="a" style="width:98%;background:#4A7BF7;--an:grow;--at:1;--d:1.2;--ease:ease-out"></i></div></div>
+            <div class="macro">Carbo<div class="v"><span data-n="196" data-at="8.1" data-dur="1.2">0</span>/250g</div><div class="bar"><i class="a" style="width:78%;background:#F59E0B;--an:grow;--at:1.1;--d:1.2;--ease:ease-out"></i></div></div>
+            <div class="macro">Gordura<div class="v"><span data-n="58" data-at="8.2" data-dur="1.2">0</span>/70g</div><div class="bar"><i class="a" style="width:83%;background:#EC4899;--an:grow;--at:1.2;--d:1.2;--ease:ease-out"></i></div></div>
+          </div>
+        </div>
+        <div class="a card meal" style="--at:2.2"><span class="em">🍳</span>Café da manhã<span class="k">420 kcal</span></div>
+        <div class="a card meal" style="--at:2.5"><span class="em">🍛</span>Almoço<span class="k">780 kcal</span></div>
+        <div class="a card meal" style="--at:2.8"><span class="em">🍌</span>Lanche<span class="k">640 kcal</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="a emo" style="--an:fly;--at:.5;--d:.9;--ease:cubic-bezier(.5,0,.8,.6);--fx:-420px;--fy:-700px">🍗</div>
+  <div class="a emo" style="--an:fly;--at:.65;--d:.9;--ease:cubic-bezier(.5,0,.8,.6);--fx:420px;--fy:-650px">🥑</div>
+  <div class="a emo" style="--an:fly;--at:.8;--d:.9;--ease:cubic-bezier(.5,0,.8,.6);--fx:-460px;--fy:-150px">🍚</div>
+  <div class="a emo" style="--an:fly;--at:.95;--d:.9;--ease:cubic-bezier(.5,0,.8,.6);--fx:450px;--fy:-100px">🥦</div>
+  <div class="a emo" style="--an:fly;--at:1.1;--d:.9;--ease:cubic-bezier(.5,0,.8,.6);--fx:0px;--fy:-800px">🍌</div>
+  <div class="a toast" style="--at:3.6">Meta de proteína: batida! 🎉</div>
+</section>
+
+<!-- S4: barcode scan -->
+<section class="scene s4" data-s="12" data-e="17" style="--s:12">
+  <h1 class="a center" style="--an:up;--at:.05">Escaneou.<br><em>Registrou.</em> ⚡</h1>
+  <div class="a phone" style="--an:phoneIn;--at:.1;--d:.6;--ease:cubic-bezier(.2,1.1,.3,1)">
+    <div class="screen">
+      <div class="cam"></div>
+      <div class="notch"></div>
+      <div class="camhint">Aponte para o código de barras</div>
+      <div class="pot"><div class="lid"></div><div class="body"><div class="brand">GREGO</div><div class="brand2">natural · 170g</div></div></div>
+      <div class="barcode"><i id="bars"></i><span>7 891000 123456</span></div>
+      <div class="frame"><b></b><b></b><b></b><b></b></div>
+      <div class="frame a ok" style="--an:show;--at:2;--d:.01"><b></b><b></b><b></b><b></b></div>
+      <div class="frame a" style="--an:hide;--at:2;--d:.01;top:640px;left:130px;pointer-events:none">
+        <div class="laser a" style="--an:laser;--at:.3;--d:.55;--n:3;--dir:alternate;--ease:ease-in-out"></div>
+      </div>
+      <div class="flashw a" style="--an:flash;--at:2;--d:.35;--ease:ease-out"></div>
+      <div class="sheet a" style="--an:sheet;--at:2.3;--d:.5;--ease:cubic-bezier(.2,1.2,.4,1)">
+        <div class="grab"></div>
+        <div class="name">Iogurte grego natural</div>
+        <div class="src">170 g · Open Food Facts</div>
+        <div class="chips"><div><b>120</b>kcal</div><div><b>17g</b>prot</div><div><b>6g</b>carbo</div><div><b>3g</b>gord</div></div>
+        <div class="addbtn a" style="--an:press;--at:3.3;--d:.3;--ease:ease-in-out">+ Adicionar ao lanche</div>
+      </div>
+    </div>
+  </div>
+  <div class="a finger" style="--an:tap;--at:2.8;--d:.8;--ease:ease-out">👆</div>
+  <div class="a plus" style="--an:floatUp;--at:3.45;--d:1.3;--ease:ease-out">+120 kcal</div>
+  <div class="a center foot" style="--an:up;--at:1">TACO + Open Food Facts: milhares de alimentos</div>
+</section>
+
+<!-- S5: workout -->
+<section class="scene s5" data-s="17" data-e="23" style="--s:17">
+  <h1 class="a center" style="--an:up;--at:.05">O Guaxi puxa ferro<br><em>com você</em> 💪</h1>
+  <div class="a gw" style="--an:pop;--at:.2;--d:.5">
+    <img class="guaxi a" src="../mobile/assets/mascot/lift.png" style="--an:lift;--at:0;--d:.5;--n:infinite;--dir:alternate;--ease:ease-in-out">
+  </div>
+  <div class="a card sets" style="--an:up;--at:.4">
+    <div class="ex">Supino reto <small>⏱ descanso 1:30</small></div>
+    <div class="set"><div class="bg a" style="--an:show;--at:1;--d:.2"></div><span class="n">1</span><span>60 kg × 10</span><span class="ck a" style="--at:1">✓</span></div>
+    <div class="set"><div class="bg a" style="--an:show;--at:1.8;--d:.2"></div><span class="n">2</span><span>60 kg × 10</span><span class="ck a" style="--at:1.8">✓</span></div>
+    <div class="set"><div class="bg a" style="--an:show;--at:2.6;--d:.2"></div><span class="n">3</span><span>62,5 kg × 10</span><span class="ck a" style="--at:2.6">✓</span></div>
+  </div>
+  <div class="confetti" id="confetti"></div>
+  <div class="pr"><div class="a" style="--an:stamp;--at:3.4;--d:.4">NOVO PR! 🏆</div></div>
+  <div class="a center vs" style="--an:up;--at:4.1">+2,5 kg vs. última vez 📈</div>
+</section>
+
+<!-- S6: streak + progress -->
+<section class="scene s6" data-s="23" data-e="28" style="--s:23">
+  <h1 class="a center" style="--an:up;--at:.05">Sequência <em>que vicia</em></h1>
+  <div class="a center note" style="--an:up;--at:.3">(do jeito bom)</div>
+  <div class="a streak" style="--an:up;--at:.35">
+    <div class="top">
+      <div class="fire a" style="--an:glowPulse;--at:.5;--d:.25;--n:infinite;--dir:alternate">🔥</div>
+      <div><div class="num" data-n="21" data-at="23.8" data-dur="1.2">0</div><div class="lbl">dias seguidos</div></div>
+    </div>
+    <div class="cal" id="cal"></div>
+  </div>
+  <div class="a chart" style="--an:up;--at:1.9">
+    <div class="t">Peso <b class="a" style="--at:3.4">−3,2 kg 📉</b></div>
+    <svg width="720" height="300" viewBox="0 0 720 300">
+      <path class="a" d="M10 40 C90 50 120 90 180 100 S280 120 330 150 S430 170 480 200 S600 230 710 260" fill="none" stroke="#22B8A3" stroke-width="14" stroke-linecap="round"
+        stroke-dasharray="1400" style="--an:draw;--at:2.2;--d:1.2;--ease:ease-in-out"/>
+      <circle class="a" cx="710" cy="260" r="20" fill="#15C896" style="--at:3.3"/>
+    </svg>
+  </div>
+  <div class="a gw" style="--an:rise;--at:2.8;--d:.6"><img class="guaxi" src="../mobile/assets/mascot/happy.png"></div>
+</section>
+
+<!-- S7: CTA -->
+<section class="scene s7" data-s="28" data-e="35" style="--s:28">
+  <div class="rays a" style="--an:spin;--d:14;--ease:linear;--n:infinite"></div>
+  <div class="a logo" style="--an:pop;--at:.15;--d:.6"><img class="a guaxi" src="../mobile/assets/mascot/logo.png" style="--an:wobble;--at:.8;--d:.5;--n:infinite;--dir:alternate;--ease:ease-in-out"></div>
+  <div class="a sticker" style="--an:stamp;--at:1.4;--d:.4"><b>100%</b>GRÁTIS</div>
+  <div class="a center name" style="--an:slam;--at:.5;--d:.4">Repla</div>
+  <div class="a center tag" style="--an:up;--at:.9">Dieta + treino num app só.<br>Com um guaxinim. 🦝</div>
+  <div class="a cta" style="--an:up;--at:1.6">
+    <div class="btn a" style="--an:pulse;--at:2;--d:.25;--n:infinite;--dir:alternate;--ease:ease-in-out">BAIXE AGORA</div>
+    <div class="play"><span>▶ Disponível no Google Play</span></div>
+  </div>
+  <div class="a finger" style="--an:tap;--at:3.2;--d:.8;--ease:ease-out">👆</div>
+  <div class="a gw" style="--an:rise;--at:.6;--d:.6">
+    <img class="guaxi a" src="../mobile/assets/mascot/cheer.png" style="--an:bob;--at:1.2;--d:.25;--n:infinite;--dir:alternate;--ease:ease-in-out">
+  </div>
+  <div class="a center bye" style="--an:up;--at:4.2">Bora treinar<br>com o Guaxi? 💚</div>
+</section>
+
+<div id="wipe" style="visibility:hidden"><img src="../mobile/assets/mascot/head.png"></div>
+</div>
+
+<script>
+// Deterministic RNG so every render is identical.
+let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+
+// Barcode stripes.
+let x = 0, stops = [];
+while (x < 100) { const w = 0.6 + rnd() * 2.4; stops.push(`#111 ${x}% ${x + w}%`, `#fff ${x + w}% ${x + w + 0.5 + rnd() * 1.8}%`); x += w + 0.5 + rnd() * 1.8; }
+document.getElementById('bars').style.background = `linear-gradient(90deg, ${stops.join(',')})`;
+
+// Confetti for the PR.
+const cf = document.getElementById('confetti'), colors = ['#15C896', '#F59E0B', '#EC4899', '#4A7BF7', '#fff'];
+for (let i = 0; i < 90; i++) {
+  const el = document.createElement('i');
+  el.className = 'a';
+  el.style.cssText = `left:${rnd() * 1080}px;background:${colors[i % 5]};--dx:${(rnd() - .5) * 500}px;--rot:${rnd() * 1440}deg;--an:fall;--at:${3.4 + rnd() * .5};--d:${1.6 + rnd() * 1.2};--ease:cubic-bezier(.3,.1,.6,1)`;
+  cf.appendChild(el);
+}
+
+// Streak calendar: 21 of 28 days light up one by one.
+const cal = document.getElementById('cal');
+for (let i = 0; i < 28; i++) {
+  const el = document.createElement('i');
+  if (i < 21) { el.className = 'a'; el.style.cssText = `--an:cell;--at:${.8 + i * .055};--d:.3`; }
+  cal.appendChild(el);
+}
+
+const scenes = [...document.querySelectorAll('.scene')];
+const counts = [...document.querySelectorAll('[data-n]')];
+const stage = document.getElementById('stage'), wipe = document.getElementById('wipe');
+const CUTS = [3, 7, 12, 17, 23, 28], WIPES = ['#15C896', '#F59E0B', '#EC4899', '#4A7BF7', '#F59E0B', '#15C896'];
+const ease = p => 1 - Math.pow(1 - p, 3);
+const clamp = p => Math.min(1, Math.max(0, p));
+
+window.seek = t => {
+  for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; }
+  for (const s of scenes) s.style.visibility = t >= +s.dataset.s && t < +s.dataset.e ? 'visible' : 'hidden';
+  for (const el of counts) el.textContent = Math.round(ease(clamp((t - el.dataset.at) / el.dataset.dur)) * el.dataset.n).toLocaleString('pt-BR');
+
+  // Iris wipe (with Guaxi's head) hides each cut.
+  const i = CUTS.findIndex(b => Math.abs(t - b) < .28);
+  if (i < 0) wipe.style.visibility = 'hidden';
+  else {
+    const p = 1 - Math.abs(t - CUTS[i]) / .28;
+    wipe.style.visibility = 'visible';
+    wipe.style.background = WIPES[i];
+    wipe.style.clipPath = `circle(${ease(p) * 1150}px at 50% 50%)`;
+    wipe.firstChild.style.transform = `scale(${ease(p)}) rotate(${(1 - p) * 180}deg)`;
+  }
+
+  // Tiny camera punch on every kick (120 BPM, beat starts at 3s).
+  const beat = t >= 3 && t < 34 ? ((t - 3) % .5) / .5 : 1;
+  stage.style.transform = `scale(${1 + .014 * Math.exp(-beat * 9)})`;
+};
+seek(0);
+</script>
+</body>
+</html>
